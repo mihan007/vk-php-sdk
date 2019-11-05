@@ -25,6 +25,7 @@ class CurlHttpClient implements TransportClient {
             CURLOPT_HEADER         => true,
             CURLOPT_CONNECTTIMEOUT => $connection_timeout,
             CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1
         );
     }
 
@@ -99,10 +100,10 @@ class CurlHttpClient implements TransportClient {
 
         $curl_error_code = curl_errno($curl);
         $curl_error = curl_error($curl);
-      
+
         $http_status = curl_getinfo($curl, CURLINFO_RESPONSE_CODE);
         curl_close($curl);
-        
+
         if ($curl_error || $curl_error_code) {
             $error_msg = "Failed curl request. Curl error {$curl_error_code}";
             if ($curl_error) {
