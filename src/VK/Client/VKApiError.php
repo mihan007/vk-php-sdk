@@ -27,6 +27,7 @@ class VKApiError {
     public function __construct($error) {
         if (is_string($error)) {
             $this->error_msg = $error;
+            $this->error_code = 0;
         } elseif (is_array($error)) {
             $this->error_code = isset($error[static::KEY_ERROR_CODE]) ? intval($error[static::KEY_ERROR_CODE]) : null;
             $this->error_msg = isset($error[static::KEY_ERROR_MSG]) ? strval($error[static::KEY_ERROR_MSG]) : null;
@@ -36,6 +37,7 @@ class VKApiError {
             $this->redirect_uri = isset($error[static::KEY_REDIRECT_URI]) ? strval($error[static::KEY_REDIRECT_URI]) : null;
             $this->request_params = isset($error[static::KEY_REQUEST_PARAMS]) ? ((array)$error[static::KEY_REQUEST_PARAMS]) : null;
         } else {
+            $this->error_code = 0;
             $this->error_msg = json_encode($error);
         }
     }
